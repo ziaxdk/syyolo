@@ -1,4 +1,4 @@
-import data from './data.json' with { type: "json" }
+import data from './20241209.json' with { type: "json" }
 import fs from 'node:fs'
 import { buildGPX, BaseBuilder } from 'gpx-builder'
 const { Point } = BaseBuilder.MODELS
@@ -19,4 +19,4 @@ const gpxData = new BaseBuilder()
 gpxData.setWayPoints(points)
 const output = buildGPX(gpxData.toObject())
 
-fs.writeFileSync('./syyolo.gpx', output)
+fs.writeFileSync('./20241209.gpx', output)
