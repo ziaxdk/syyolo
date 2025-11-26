@@ -1,0 +1,200 @@
+<html lang="da">
+
+<head>
+    <meta http-equiv="Content-Language" content="da">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Geodatastyrelsen</title>
+    <link rel="icon" type="image/png" href="/favicon16x16.png" />
+    <link rel="stylesheet" type="text/css" href="../../../styles/havnelods.css?20230330">
+    <script type="text/javascript" src="../../../script/havnelods4.js?20230330"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        (function () {
+            var cc = getCookie('cconsent');
+            if (cc != null && cc != "") {
+                var parsedCC = JSON.parse(cc);
+                if (parsedCC.categories.analytic.wanted == true) {
+                    var sz = document.createElement('script'); sz.type = 'text/javascript'; sz.async = true;
+                    sz.src = '//siteimproveanalytics.com/js/siteanalyze_6082736.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sz, s);
+                }
+            }
+        })();
+        /*]]>*/
+    </script>
+    <style>
+        .en {
+            display: block;
+            visibility: visible;
+        }
+
+        .da {
+            display: block;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body onload="initAll();" topmargin="0" marginwidth="0" marginheight="0" leftmargin="0">
+    <div style="padding: 14px;">
+        <div id="titel" class="overskrift1" style="margin-bottom: 5px;"></div>
+        <div id="tekst" class="brod" style="margin: 7px 0px;"></div>
+        <div id="dato" class="brod" style="margin: 7px 0px;"></div>
+        <div id="billed-nav" style="margin-bottom: 7px;">
+            <div class="brod" style="position:relative;display:inline-block;">
+                <span style="float:left;"><a id='billedMenu0' class='billeder-menu-item-selected' href='javascript:visBillede(0);'>1</a>&nbsp;</span>
+                <span style="cursor: pointer;float:left;margin-left:30px;" onclick="prevImg();" class="da">
+                    <span class="largedarkred"><</span> Forrige
+                </span>
+                <span style="cursor: pointer;float:left;margin-left:30px;" onclick="nextImg();" class="da">
+                    Næste <span class="largedarkred">></span>
+                </span>
+                <span style="cursor: pointer;float:left;margin-left:30px;" onclick="prevImg();" class="en">
+                    <span class="largedarkred"><</span> Previous
+                </span>
+                <span style="cursor: pointer;float:left;margin-left:30px;" onclick="nextImg();" class="en">
+                    Next <span class="largedarkred">></span>
+                </span>
+            </div>
+        </div>
+        <img id="billede" style="margin-bottom: 10px; max-width: 100%;" src="" vspace="5">
+        <div class="brod">© Geodatastyrelsen</div>
+        <div id='eftertekst' class='red-box' style="visibility:hidden;"></div>
+    </div>
+    <script type="text/javascript">
+        var lang = getCookie('language');
+        var titel = "Agernæs Havn";
+        var tekst = "<span class='da'>Plan opdateret 04-05-2018</span><span class='en'>Plan updated 04-05-2018</span>";
+        var maxImg = 1;
+
+        var img = new Array(1);
+        img[0] = '../../../Planer/jpg_200/LF_AGRNS.jpg';
+
+        var txt = new Array(1);
+        txt[0] = '';
+
+        var datestxt = new Array(1);
+        datestxt[0] = '<span class="da">Plan opdateret 04-05-2018</span><span class="en">Plan updated 04-05-2018</span>';
+
+        var imgShown = -1;
+        var initialPictureIndex = 0;
+
+        function visBillede(nr) {
+            document.getElementById("billede").src = img[nr];
+            if (document.getElementById("billede").src.includes("Planer") && txt[nr] != '') {
+                document.getElementById("eftertekst").innerHTML = txt[nr];
+                document.getElementById("eftertekst").style.visibility = "visible";
+            }
+            else if (document.getElementById("billede").src.includes("Foto") && txt[nr] != '') {
+                //document.getElementById("tekst").innerHTML = txt[nr];
+                document.getElementById("dato").innerHTML = txt[nr];
+
+                let _lang = null;
+                if (lang == 'en') _lang = 'da';
+                else _lang = 'en';
+                var divsToHide = document.getElementsByClassName(_lang); //divsToHide is an array
+                for (var i = 0; i < divsToHide.length; i++) {
+                    divsToHide[i].style.visibility = "hidden";
+                    divsToHide[i].style.display = "none";
+                }
+            }
+            else {
+                document.getElementById("eftertekst").style.visibility = "hidden";
+                document.getElementById("eftertekst").innerHTML = txt[nr];
+            }
+
+            if (document.getElementById("billede").src.includes("Planer") && datestxt[nr] != '') {
+                document.getElementById("dato").innerHTML = datestxt[nr];
+
+                let _lang = null;
+                if (lang == 'en') _lang = 'da';
+                else _lang = 'en';
+                var divsToHide = document.getElementsByClassName(_lang); //divsToHide is an array
+                for (var i = 0; i < divsToHide.length; i++) {
+                    divsToHide[i].style.visibility = "hidden";
+                    divsToHide[i].style.display = "none";
+                }
+            }
+            //document.getElementById("billede").classList.remove("zoomcursor");
+            //if (document.getElementById("billede").src.includes("Planer")) {
+            //    document.getElementById("billede").classList.add("zoomcursor");
+            //    //toggleClass(document.getElementById("billede"), 'zoomcursor');
+            //    document.getElementById("billede").onclick = function () { swapSize(); };
+            //}
+            imgShown = nr;
+            if (maxImg > 1) {
+                for (var ix = 0; ix < maxImg; ix++) {
+                    if (ix != nr) {
+                        document.getElementById("billedMenu" + ix).className = "billeder-menu";
+                    } else {
+                        document.getElementById("billedMenu" + ix).className = "billeder-menu-item-selected";
+                    }
+                }
+            }
+        };
+
+        function prevImg() {
+            if (imgShown > 0) {
+                visBillede(imgShown - 1);
+            }
+        };
+
+        function nextImg() {
+            if (imgShown < (maxImg - 1)) {
+                visBillede(imgShown + 1);
+            }
+        };
+
+        function initAll() {
+            document.getElementById("titel").innerHTML = titel;
+            document.getElementById("dato").innerHTML = tekst;
+            changeLangLocal(lang);
+            if (parseInt(maxImg) == 1) {
+                document.getElementById("billed-nav").style.visibility = "hidden";
+                document.getElementById("billed-nav").style.display = "none";
+            }
+            visBillede(initialPictureIndex);
+        };
+
+        var ssMain = 1;
+        var cssRules = (document.all) ? 'rules' : 'cssRules';
+        function changeCSSStyle(selector, cssProp, cssVal) {
+            for (i = 0, len = document.styleSheets[ssMain][cssRules].length; i < len; i++) {
+
+                if (document.styleSheets[ssMain][cssRules][i].selectorText === selector) {
+                    document.styleSheets[ssMain][cssRules][i].style[cssProp] = cssVal;
+                    return;
+                }
+            }
+        };
+
+        function changeLangLocal(lang) {
+            if (lang == null) lang == "da"
+
+            if (lang == "en") lang = "da";
+            else lang = "en";
+            //console.log("changeLang", "hide", lang);
+            changeCSSStyle('.' + lang, 'visibility', 'hidden');
+            changeCSSStyle('.' + lang, 'display', 'none');
+            var divsToHide = document.getElementsByClassName(lang); //divsToHide is an array
+            for (var i = 0; i < divsToHide.length; i++) {
+                divsToHide[i].style.visibility = "hidden"; // or
+                divsToHide[i].style.display = "none"; // depending on what you're doing
+            }
+
+            if (lang == "en") lang = "da";
+            else lang = "en";
+            //console.log("changeLang", "show", lang);
+            changeCSSStyle('.' + lang, 'visibility', 'visible');
+            changeCSSStyle('.' + lang, 'display', 'block');
+            divsToHide = document.getElementsByClassName(lang); //divsToHide is an array
+            for (var i = 0; i < divsToHide.length; i++) {
+                divsToHide[i].style.visibility = "visible"; // or
+                divsToHide[i].style.display = "block"; // depending on what you're doing
+            }
+        };
+        changeLangLocal(lang);
+    </script>
+</body>
+
+</html>
